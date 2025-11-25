@@ -1,7 +1,0 @@
-Placeholder for `analytics-overview.png`.
-Replace this file with the real image at `frontend/screenshots/analytics-overview.png`.
-
-To replace:
-1. Save the real image named `analytics-overview.png`.
-2. Put it in `frontend/screenshots/`.
-3. Remove this `.txt` placeholder.

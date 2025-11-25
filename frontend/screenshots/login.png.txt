@@ -1,7 +1,0 @@
-Placeholder for `login.png`.
-Replace this file with the real image at `frontend/screenshots/login.png`.
-
-To replace:
-1. Save the real image named `login.png`.
-2. Put it in `frontend/screenshots/`.
-3. Remove this `.txt` placeholder.

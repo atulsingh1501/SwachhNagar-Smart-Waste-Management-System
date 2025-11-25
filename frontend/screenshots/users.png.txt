@@ -1,7 +1,0 @@
-Placeholder for `users.png`.
-Replace this file with the real image at `frontend/screenshots/users.png`.
-
-To replace:
-1. Save the real image named `users.png`.
-2. Put it in `frontend/screenshots/`.
-3. Remove this `.txt` placeholder.

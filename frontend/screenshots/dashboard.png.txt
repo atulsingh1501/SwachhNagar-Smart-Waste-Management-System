@@ -1,7 +1,0 @@
-Placeholder for `dashboard.png`.
-Replace this file with the real image at `frontend/screenshots/dashboard.png`.
-
-To replace:
-1. Save the real image named `dashboard.png`.
-2. Put it in `frontend/screenshots/`.
-3. Remove this `.txt` placeholder.

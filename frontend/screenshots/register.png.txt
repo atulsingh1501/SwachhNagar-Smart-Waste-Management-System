@@ -1,7 +1,0 @@
-Placeholder for `register.png` (Create Account / Register screenshot).
-Replace this file with the real image at `frontend/screenshots/register.png`.
-
-To replace:
-1. Save the real image named `register.png`.
-2. Put it in `frontend/screenshots/` replacing this `.txt` placeholder.
-3. Run `git add frontend/screenshots/register.png && git commit -m "docs(screenshots): add register screenshot" && git push` or upload the image here and I'll commit it for you.
