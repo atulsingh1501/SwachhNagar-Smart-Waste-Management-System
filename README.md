@@ -130,44 +130,10 @@ Common issues and solutions:
   - Sometimes Vite HMR shows errors due to broken imports or duplicate React contexts. Restarting the dev server can help: stop and `npm run dev` again.
 
 ## Screenshots
-Include screenshots in `frontend/screenshots/` and reference them in the README. Below are the images I will reference — place the exact files in `frontend/screenshots/` so they render in this README.
 
-Files to add (recommended names):
+Screenshots have been uploaded to the project owner's LinkedIn account. To keep the repository lightweight, images are not embedded here.
 
-- `frontend/screenshots/dashboard.png`
-- `frontend/screenshots/users.png`
-- `frontend/screenshots/routes.png`
-- `frontend/screenshots/vehicles.png`
-- `frontend/screenshots/reports.png`
-- `frontend/screenshots/analytics-overview.png`
-- `frontend/screenshots/analytics-scroll1.png`
-- `frontend/screenshots/analytics-scroll2.png`
-- `frontend/screenshots/analytics-insights.png`
-- `frontend/screenshots/login.png`
-
-When those images are present in the repo, they will appear here:
-
-![Dashboard](frontend/screenshots/dashboard.png)
-
-![Users](frontend/screenshots/users.png)
-
-![Routes](frontend/screenshots/routes.png)
-
-![Vehicles](frontend/screenshots/vehicles.png)
-
-![Reports](frontend/screenshots/reports.png)
-
-![Analytics Overview](frontend/screenshots/analytics-overview.png)
-
-![Analytics Scroll 1](frontend/screenshots/analytics-scroll1.png)
-
-![Analytics Scroll 2](frontend/screenshots/analytics-scroll2.png)
-
-![Analytics Insights](frontend/screenshots/analytics-insights.png)
-
-![Login](frontend/screenshots/login.png)
-
-If you upload the images here or place them in `frontend/screenshots/` in the workspace, I will add and commit them for you.
+Please paste your LinkedIn post or album URL in the project README when ready and I will add a direct link to it in this section. If you prefer images embedded in the repository instead, upload them to `frontend/screenshots/` and I will add them to the README.
 
 ## Contributing
 
