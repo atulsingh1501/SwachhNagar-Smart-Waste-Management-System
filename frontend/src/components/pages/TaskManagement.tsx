@@ -13,7 +13,7 @@ import {
   Pause,
   CheckCircle
 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext_fixed';
 import { fetchCollections, fetchVehicles, fetchRoutes, updateCollection } from '../../lib/api_fixed';
 
 export default function TaskManagement() {
