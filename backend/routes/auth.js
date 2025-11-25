@@ -11,14 +11,54 @@ const JWT_SECRET = config.jwt.secret;
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password, role, phone, assignedArea } = req.body;
+
+    // Validate required fields
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: 'Name, email, and password are required' });
+    }
+
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ error: 'Email already in use' });
+
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword, role, phone, assignedArea });
+
+    // Create user
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+      role: role || 'citizen',
+      phone,
+      assignedArea
+    });
+
     await user.save();
-    res.status(201).json({ message: 'User registered successfully' });
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      JWT_SECRET,
+      { expiresIn: '1d' }
+    );
+
+    // Return token and user data (excluding password)
+    res.status(201).json({
+      message: 'User registered successfully',
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phone: user.phone,
+        assignedArea: user.assignedArea
+      }
+    });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error('Registration error:', err);
+    res.status(400).json({ error: err.message || 'Registration failed' });
   }
 });
 

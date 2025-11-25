@@ -48,7 +48,6 @@ export default function UserManagement() {
   const getRoleColor = (role: string) => {
     switch (role) {
       case 'admin': return 'text-red-600 bg-red-100';
-      case 'manager': return 'text-purple-600 bg-purple-100';
       case 'staff': return 'text-blue-600 bg-blue-100';
       case 'citizen': return 'text-green-600 bg-green-100';
       default: return 'text-gray-600 bg-gray-100';
@@ -175,7 +174,6 @@ export default function UserManagement() {
               >
                 <option value="all">All Roles</option>
                 <option value="admin">Admin</option>
-                <option value="manager">Manager</option>
                 <option value="staff">Staff</option>
                 <option value="citizen">Citizen</option>
               </select>
@@ -239,7 +237,6 @@ export default function UserManagement() {
                       className={`px-3 py-1 rounded-full text-xs font-medium border-0 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${getRoleColor(user.role)}`}
                     >
                       <option value="admin">Admin</option>
-                      <option value="manager">Manager</option>
                       <option value="staff">Staff</option>
                       <option value="citizen">Citizen</option>
                     </select>

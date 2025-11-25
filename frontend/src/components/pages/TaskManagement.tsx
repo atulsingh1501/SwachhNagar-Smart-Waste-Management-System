@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { 
-  CheckSquare, 
-  Clock, 
-  MapPin, 
+import React, { useState, useEffect } from 'react';
+import {
+  CheckSquare,
+  Clock,
+  MapPin,
   Navigation,
   User,
   Truck,
@@ -13,24 +13,48 @@ import {
   Pause,
   CheckCircle
 } from 'lucide-react';
-import { useSupabaseQuery, useSupabaseMutation } from '../../hooks/useSupabase';
 import { useAuth } from '../../context/AuthContext';
+import { fetchCollections, fetchVehicles, fetchRoutes, updateCollection } from '../../lib/api_fixed';
 
 export default function TaskManagement() {
   const { user } = useAuth();
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [collections, setCollections] = useState<any[]>([]);
+  const [vehicles, setVehicles] = useState<any[]>([]);
+  const [routes, setRoutes] = useState<any[]>([]);
+  const [profiles, setProfiles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [updating, setUpdating] = useState(false);
 
-  const { data: collections, loading, error } = useSupabaseQuery('collections', {
-    eq: user?.role === 'staff' ? ['assigned_staff', user.id] : undefined,
-    order: ['scheduled_time', { ascending: true }]
-  });
+  useEffect(() => {
+    const loadData = async () => {
+      const token = localStorage.getItem('auth_token');
+      if (!token) return;
 
-  const { data: vehicles } = useSupabaseQuery('vehicles');
-  const { data: routes } = useSupabaseQuery('routes');
-  const { data: profiles } = useSupabaseQuery('profiles');
+      try {
+        setLoading(true);
+        const [collectionsData, vehiclesData, routesData] = await Promise.all([
+          fetchCollections(token),
+          fetchVehicles(token),
+          fetchRoutes(token)
+        ]);
 
-  const { update: updateCollection, loading: updating } = useSupabaseMutation('collections');
+        setCollections(collectionsData);
+        setVehicles(vehiclesData);
+        setRoutes(routesData);
+        // For now, we'll skip profiles as it's not in our API yet
+        setProfiles([]);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   const filteredTasks = collections?.filter(task => {
     const matchesSearch = task.area.toLowerCase().includes(searchTerm.toLowerCase());
@@ -54,17 +78,28 @@ export default function TaskManagement() {
 
   const handleStatusChange = async (taskId: string, newStatus: string) => {
     try {
+      setUpdating(true);
+      const token = localStorage.getItem('auth_token');
+      if (!token) return;
+
       const updateData: any = { status: newStatus };
-      
+
       if (newStatus === 'in-progress') {
         updateData.actual_start_time = new Date().toISOString();
       } else if (newStatus === 'completed') {
         updateData.actual_end_time = new Date().toISOString();
       }
-      
-      await updateCollection(taskId, updateData);
+
+      await updateCollection(taskId, updateData, token);
+
+      // Update local state
+      setCollections(prev => prev.map((task: any) =>
+        task.id === taskId ? { ...task, ...updateData } : task
+      ));
     } catch (error) {
       console.error('Error updating task status:', error);
+    } finally {
+      setUpdating(false);
     }
   };
 

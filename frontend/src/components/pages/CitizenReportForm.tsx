@@ -82,14 +82,14 @@ export default function CitizenReportForm() {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-xl font-bold text-gray-900">Report a Waste Issue</h2>
-          <p className="text-gray-600 text-sm mt-1">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900">Report a Waste Issue</h2>
+          <p className="text-gray-600 text-xs sm:text-sm mt-1">
             Help us maintain a clean environment by reporting uncollected waste or other issues.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-6">
           {/* Location */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -102,8 +102,8 @@ export default function CitizenReportForm() {
                 required
                 value={formData.location}
                 onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                placeholder="Enter street address or landmark"
+                className="w-full pl-10 pr-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm sm:text-base"
+                placeholder="Enter address in Vadodara (e.g., 'Sayajigunj Main Road')"
               />
               <button
                 type="button"
@@ -125,7 +125,7 @@ export default function CitizenReportForm() {
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
               rows={4}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm sm:text-base"
               placeholder="Describe the issue in detail (e.g., 'Bin not collected for 3 days', 'Overflowing garbage on sidewalk')"
             />
           </div>
@@ -210,7 +210,7 @@ export default function CitizenReportForm() {
           <div>
             <h3 className="font-medium text-orange-800">Emergency Situations</h3>
             <p className="text-sm text-orange-700 mt-1">
-              For urgent health or safety hazards, call our emergency hotline at <strong>311</strong> immediately.
+              For urgent health or safety hazards, call Vadodara Municipal Corporation emergency hotline at <strong>108</strong> immediately.
             </p>
           </div>
         </div>

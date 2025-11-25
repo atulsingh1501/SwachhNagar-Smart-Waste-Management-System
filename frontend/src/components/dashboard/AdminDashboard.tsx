@@ -31,65 +31,65 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Users</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.totalUsers}</p>
+              <p className="text-xs sm:text-sm font-medium text-gray-600">Total Users</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.totalUsers}</p>
             </div>
-            <div className="bg-blue-100 p-3 rounded-full">
-              <Users className="h-6 w-6 text-blue-600" />
+            <div className="bg-blue-100 p-2 sm:p-3 rounded-full">
+              <Users className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
             </div>
           </div>
-          <div className="mt-4 flex items-center text-sm text-green-600">
-            <TrendingUp className="h-4 w-4 mr-1" />
+          <div className="mt-3 sm:mt-4 flex items-center text-xs sm:text-sm text-green-600">
+            <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
             <span>12% increase</span>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Active Vehicles</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.activeVehicles}</p>
+              <p className="text-xs sm:text-sm font-medium text-gray-600">Active Vehicles</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.activeVehicles}</p>
             </div>
-            <div className="bg-emerald-100 p-3 rounded-full">
-              <Truck className="h-6 w-6 text-emerald-600" />
+            <div className="bg-emerald-100 p-2 sm:p-3 rounded-full">
+              <Truck className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600" />
             </div>
           </div>
-          <div className="mt-4 flex items-center text-sm text-gray-600">
+          <div className="mt-3 sm:mt-4 flex items-center text-xs sm:text-sm text-gray-600">
             <span>{mockVehicles.filter(v => v.status === 'maintenance').length} in maintenance</span>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Pending Reports</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.pendingReports}</p>
+              <p className="text-xs sm:text-sm font-medium text-gray-600">Pending Reports</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.pendingReports}</p>
             </div>
-            <div className="bg-orange-100 p-3 rounded-full">
-              <AlertTriangle className="h-6 w-6 text-orange-600" />
+            <div className="bg-orange-100 p-2 sm:p-3 rounded-full">
+              <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-orange-600" />
             </div>
           </div>
-          <div className="mt-4 flex items-center text-sm text-orange-600">
-            <Clock className="h-4 w-4 mr-1" />
+          <div className="mt-3 sm:mt-4 flex items-center text-xs sm:text-sm text-orange-600">
+            <Clock className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
             <span>Avg 2.5h response</span>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Today's Collections</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.completedCollections}</p>
+              <p className="text-xs sm:text-sm font-medium text-gray-600">Today's Collections</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.completedCollections}</p>
             </div>
-            <div className="bg-green-100 p-3 rounded-full">
-              <CheckCircle className="h-6 w-6 text-green-600" />
+            <div className="bg-green-100 p-2 sm:p-3 rounded-full">
+              <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
             </div>
           </div>
-          <div className="mt-4 flex items-center text-sm text-green-600">
+          <div className="mt-3 sm:mt-4 flex items-center text-xs sm:text-sm text-green-600">
             <span>87% completion rate</span>
           </div>
         </div>

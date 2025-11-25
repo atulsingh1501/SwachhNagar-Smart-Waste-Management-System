@@ -90,11 +90,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         password
       });
 
-      if (result.message === 'User registered successfully') {
-        // Auto login after successful registration
-        return await signIn(email, password);
+      if (result.token && result.user) {
+        // Registration successful, set user and token directly
+        setToken(result.token);
+        setUser(result.user);
+
+        // Store in localStorage for persistence
+        localStorage.setItem('auth_token', result.token);
+        localStorage.setItem('user_data', JSON.stringify(result.user));
+
+        return {};
       } else {
-        return { error: 'Registration failed' };
+        return { error: result.error || 'Registration failed' };
       }
     } catch (error) {
       return { error: 'An unexpected error occurred' };

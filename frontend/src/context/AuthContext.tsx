@@ -1,14 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User } from '@supabase/supabase-js';
-import { supabase, isSupabaseConfigured, mockAuth, mockDatabase } from '../lib/supabase';
-import { UserProfile } from '../types';
+import { User } from '../types';
+import { loginUser, registerUser } from '../lib/api';
 
 interface AuthContextType {
   user: User | null;
-  profile: UserProfile | null;
+  profile: User | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
-  signUp: (email: string, password: string, userData: Partial<UserProfile>) => Promise<{ error?: string }>;
+  signUp: (email: string, password: string, userData: Partial<User>) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
 }
 
@@ -24,156 +23,82 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [profile, setProfile] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get initial session
-    const getInitialSession = async () => {
+    // Check for stored token and user data
+    const token = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('user');
+
+    if (token && storedUser) {
       try {
-        let session;
-        
-        if (isSupabaseConfigured()) {
-          const { data } = await supabase.auth.getSession();
-          session = data.session;
-        } else {
-          const { data } = await mockAuth.getSession();
-          session = data.session;
-        }
-        
-        if (session?.user) {
-          setUser(session.user);
-          await fetchUserProfile(session.user.id);
-        }
+        const userData = JSON.parse(storedUser);
+        setUser(userData);
+        setProfile(userData);
       } catch (error) {
-        console.error('Error getting initial session:', error);
-      } finally {
-        setLoading(false);
+        console.error('Error parsing stored user data:', error);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
       }
-    };
-
-    getInitialSession();
-
-    // Listen for auth changes
-    let subscription;
-    
-    if (isSupabaseConfigured()) {
-      const { data } = supabase.auth.onAuthStateChange(
-        async (event, session) => {
-          if (session?.user) {
-            setUser(session.user);
-            await fetchUserProfile(session.user.id);
-          } else {
-            setUser(null);
-            setProfile(null);
-          }
-          setLoading(false);
-        }
-      );
-      subscription = data.subscription;
-    } else {
-      const { data } = mockAuth.onAuthStateChange(
-        async (event, session) => {
-          if (session?.user) {
-            setUser(session.user);
-            await fetchUserProfile(session.user.id);
-          } else {
-            setUser(null);
-            setProfile(null);
-          }
-          setLoading(false);
-        }
-      );
-      subscription = data.subscription;
     }
 
-    return () => subscription?.unsubscribe();
+    setLoading(false);
   }, []);
 
   const fetchUserProfile = async (userId: string) => {
-    try {
-      let data, error;
-      
-      if (isSupabaseConfigured()) {
-        const result = await supabase
-          .from('user_profiles')
-          .select('*')
-          .eq('id', userId)
-          .single();
-        data = result.data;
-        error = result.error;
-      } else {
-        const result = await mockDatabase
-          .from('user_profiles')
-          .select('*')
-          .eq('id', userId)
-          .single();
-        data = result.data;
-        error = result.error;
-      }
-
-      if (error) {
-        console.error('Error fetching user profile:', error);
-        return;
-      }
-
-      if (data) {
-        setProfile(data);
-      }
-    } catch (error) {
-      console.error('Error in fetchUserProfile:', error);
-    }
+    // Profile is already set from login response, no need to fetch separately
+    return;
   };
 
   const signIn = async (email: string, password: string) => {
     try {
       setLoading(true);
-      
-      let data, error;
-      
-      if (isSupabaseConfigured()) {
-        const result = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        data = result.data;
-        error = result.error;
-      } else {
-        const result = await mockAuth.signInWithPassword({ email, password });
-        data = result.data;
-        error = result.error;
-      }
 
-      if (error) {
-        return { error: error.message };
-      }
+      const response = await loginUser(email, password);
+      const { user, token } = response;
+
+      // Store token and user data
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      setUser(user);
+      setProfile(user);
 
       return {};
-    } catch (error) {
-      return { error: 'An unexpected error occurred' };
+    } catch (error: any) {
+      return { error: error.message || 'Login failed' };
     } finally {
       setLoading(false);
     }
   };
 
-  const signUp = async (email: string, password: string, userData: Partial<UserProfile>) => {
+  const signUp = async (email: string, password: string, userData: Partial<User>) => {
     try {
       setLoading(true);
-      const { data, error } = await supabase.auth.signUp({
+
+      const registrationData = {
         email,
         password,
-        options: {
-          data: userData
-        }
-      });
+        name: userData.name || '',
+        role: userData.role || 'citizen',
+        phone: userData.phone || '',
+        assignedArea: userData.assignedArea || ''
+      };
 
-      if (error) {
-        return { error: error.message };
-      }
+      const response = await registerUser(registrationData);
+      const { user, token } = response;
+
+      // Store token and user data
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      setUser(user);
+      setProfile(user);
 
       return {};
-    } catch (error) {
-      return { error: 'An unexpected error occurred' };
+    } catch (error: any) {
+      return { error: error.message || 'Registration failed' };
     } finally {
       setLoading(false);
     }
@@ -182,12 +107,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signOut = async () => {
     try {
       setLoading(true);
-      
-      if (isSupabaseConfigured()) {
-        await supabase.auth.signOut();
-      } else {
-        await mockAuth.signOut();
-      }
+
+      // Clear stored data
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+
+      setUser(null);
+      setProfile(null);
     } catch (error) {
       console.error('Error signing out:', error);
     } finally {

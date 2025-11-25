@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { 
-  Truck, 
-  Plus, 
-  Edit, 
-  Trash2, 
+import React, { useState, useEffect } from 'react';
+import {
+  Truck,
+  Plus,
+  Edit,
+  Trash2,
   Search,
   Filter,
   MapPin,
@@ -12,20 +12,41 @@ import {
   AlertTriangle,
   Calendar
 } from 'lucide-react';
-import { useSupabaseQuery, useSupabaseMutation } from '../../hooks/useSupabase';
+import { fetchVehicles, fetchRoutes, updateVehicle } from '../../lib/api_fixed';
 
 export default function VehicleManagement() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [vehicles, setVehicles] = useState<any[]>([]);
+  const [routes, setRoutes] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [updating, setUpdating] = useState(false);
 
-  const { data: vehicles, loading, error } = useSupabaseQuery('vehicles', {
-    order: ['created_at', { ascending: false }]
-  });
+  useEffect(() => {
+    const loadData = async () => {
+      const token = localStorage.getItem('auth_token');
+      if (!token) return;
 
-  const { data: routes } = useSupabaseQuery('routes');
+      try {
+        setLoading(true);
+        const [vehiclesData, routesData] = await Promise.all([
+          fetchVehicles(token),
+          fetchRoutes(token)
+        ]);
 
-  const { update: updateVehicle, loading: updating } = useSupabaseMutation('vehicles');
+        setVehicles(vehiclesData);
+        setRoutes(routesData);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   const filteredVehicles = vehicles?.filter(vehicle => {
     const matchesSearch = vehicle.plate_number.toLowerCase().includes(searchTerm.toLowerCase());
@@ -53,9 +74,20 @@ export default function VehicleManagement() {
 
   const handleStatusChange = async (vehicleId: string, newStatus: string) => {
     try {
-      await updateVehicle(vehicleId, { status: newStatus as any });
+      setUpdating(true);
+      const token = localStorage.getItem('auth_token');
+      if (!token) return;
+
+      await updateVehicle(vehicleId, { status: newStatus }, token);
+
+      // Update local state
+      setVehicles(prev => prev.map((vehicle: any) =>
+        vehicle.id === vehicleId ? { ...vehicle, status: newStatus } : vehicle
+      ));
     } catch (error) {
       console.error('Error updating vehicle status:', error);
+    } finally {
+      setUpdating(false);
     }
   };
 

@@ -17,7 +17,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignUp }) => {
   // Demo accounts for testing
   const demoAccounts = [
     { email: 'admin@wms.com', password: 'admin123', role: 'Admin' },
-    { email: 'manager@wms.com', password: 'manager123', role: 'Manager' },
     { email: 'staff@wms.com', password: 'staff123', role: 'Staff' },
     { email: 'citizen@wms.com', password: 'citizen123', role: 'Citizen' },
   ];
@@ -58,28 +57,28 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignUp }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full space-y-8">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-2 sm:p-4">
+      <div className="max-w-md w-full space-y-4">
+        <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-8">
           {/* Header */}
-          <div className="text-center mb-8">
-            <div className="mx-auto h-16 w-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-              <LogIn className="h-8 w-8 text-green-600" />
+          <div className="text-center mb-4 sm:mb-6">
+            <div className="mx-auto h-12 w-12 sm:h-16 sm:w-16 bg-green-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+              <LogIn className="h-7 w-7 sm:h-8 sm:w-8 text-green-600" />
             </div>
-            <h2 className="text-3xl font-bold text-gray-900">Welcome Back</h2>
-            <p className="text-gray-600 mt-2">Sign in to your WMS account</p>
+            <h2 className="text-xl sm:text-3xl font-bold text-gray-900">Welcome Back</h2>
+            <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Sign in to your WMS account</p>
           </div>
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2">
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2">
               <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
               <span className="text-red-700 text-sm">{error}</span>
             </div>
           )}
 
           {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
@@ -91,7 +90,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignUp }) => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
+                  className="w-full pl-10 pr-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors text-sm sm:text-base"
                   placeholder="Enter your email"
                   required
                 />
@@ -109,7 +108,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignUp }) => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
+                  className="w-full pl-10 pr-12 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors text-sm sm:text-base"
                   placeholder="Enter your password"
                   required
                 />
@@ -126,22 +125,22 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignUp }) => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+              className="w-full bg-green-600 text-white py-2 sm:py-3 px-4 rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm sm:text-base"
             >
               {isLoading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
 
           {/* Demo Accounts */}
-          <div className="mt-8 pt-6 border-t border-gray-200">
-            <p className="text-sm text-gray-600 text-center mb-4">Demo Accounts (Click to login):</p>
-            <div className="grid grid-cols-2 gap-2">
+          <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-gray-200">
+            <p className="text-xs sm:text-sm text-gray-600 text-center mb-2 sm:mb-3">Demo Accounts (Click to login):</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {demoAccounts.map((account) => (
                 <button
                   key={account.role}
                   onClick={() => handleDemoLogin(account.email, account.password)}
                   disabled={isLoading}
-                  className="p-3 text-sm bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 sm:p-3 text-xs sm:text-sm bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-full"
                 >
                   <div className="font-medium text-gray-900">{account.role}</div>
                   <div className="text-gray-600 text-xs">{account.email}</div>
@@ -151,8 +150,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignUp }) => {
           </div>
 
           {/* Sign Up Link */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+          <div className="mt-3 sm:mt-4 text-center">
+            <p className="text-xs sm:text-sm text-gray-600">
               Don't have an account?{' '}
               <button
                 type="button"
@@ -163,20 +162,20 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignUp }) => {
               </button>
             </p>
           </div>
+
+          {/* Developer Credit */}
+          <div className="mt-3 sm:mt-4 text-center">
+            <span className="text-xs text-gray-400">
+              © 2024 Made with <span className="text-red-500">❤</span> by Atul
+            </span>
+          </div>
         </div>
 
         {/* Footer */}
-        <div className="text-center text-sm text-gray-600">
+        <div className="text-center text-xs sm:text-sm text-gray-600">
           <p>Waste Management System v1.0</p>
           <p className="mt-1">Secure • Efficient • Reliable</p>
         </div>
-      </div>
-
-      {/* Developer Credit Fixed at Bottom */}
-      <div className="fixed bottom-2 left-0 right-0 text-center pointer-events-none z-50">
-        <span className="text-xs text-gray-400">
-          © 2024 Made with <span className="text-red-500">❤</span> by Atul
-        </span>
       </div>
     </div>
   );

@@ -39,7 +39,6 @@ function AppContent() {
       case 'dashboard':
         switch (user.role) {
           case 'admin':
-          case 'manager':
             return <AdminDashboard />;
           case 'staff':
             return <StaffDashboard />;

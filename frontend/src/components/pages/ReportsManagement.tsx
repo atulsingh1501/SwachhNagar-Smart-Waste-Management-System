@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { 
-  FileText, 
+import React, { useState, useEffect } from 'react';
+import {
+  FileText,
   Search,
   Filter,
   MapPin,
@@ -12,21 +12,39 @@ import {
   MessageSquare,
   Calendar
 } from 'lucide-react';
-import { useSupabaseQuery, useSupabaseMutation } from '../../hooks/useSupabase';
+import { fetchReports, updateReport } from '../../lib/api_fixed';
 
 export default function ReportsManagement() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [priorityFilter, setPriorityFilter] = useState<string>('all');
   const [selectedReport, setSelectedReport] = useState<string | null>(null);
+  const [reports, setReports] = useState<any[]>([]);
+  const [profiles, setProfiles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [updating, setUpdating] = useState(false);
 
-  const { data: reports, loading, error } = useSupabaseQuery('citizen_reports', {
-    order: ['created_at', { ascending: false }]
-  });
+  useEffect(() => {
+    const loadData = async () => {
+      const token = localStorage.getItem('auth_token');
+      if (!token) return;
 
-  const { data: profiles } = useSupabaseQuery('profiles');
+      try {
+        setLoading(true);
+        const reportsData = await fetchReports(token);
+        setReports(reportsData);
+        // For now, we'll skip profiles as it's not in our API yet
+        setProfiles([]);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load data');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const { update: updateReport, loading: updating } = useSupabaseMutation('citizen_reports');
+    loadData();
+  }, []);
 
   const filteredReports = reports?.filter(report => {
     const matchesSearch = report.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -56,13 +74,25 @@ export default function ReportsManagement() {
 
   const handleStatusChange = async (reportId: string, newStatus: string) => {
     try {
+      setUpdating(true);
+      const token = localStorage.getItem('auth_token');
+      if (!token) return;
+
       const updateData: any = { status: newStatus };
       if (newStatus === 'resolved') {
         updateData.resolved_at = new Date().toISOString();
       }
-      await updateReport(reportId, updateData);
+
+      await updateReport(reportId, updateData, token);
+
+      // Update local state
+      setReports(prev => prev.map((report: any) =>
+        report.id === reportId ? { ...report, ...updateData } : report
+      ));
     } catch (error) {
       console.error('Error updating report status:', error);
+    } finally {
+      setUpdating(false);
     }
   };
 

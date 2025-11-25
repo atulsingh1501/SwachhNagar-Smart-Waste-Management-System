@@ -1,8 +1,7 @@
-import React from 'react';
-import { useAuth } from '../../context/AuthContext_backend';
+import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext_fixed';
 import { 
   LogOut, 
-  Bell, 
   Settings, 
   Truck, 
   Map, 
@@ -22,6 +21,7 @@ interface LayoutProps {
 
 export default function Layout({ children, currentPage, onPageChange }: LayoutProps) {
   const { user, signOut } = useAuth();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const getNavigationItems = () => {
     const baseItems = [
@@ -38,14 +38,7 @@ export default function Layout({ children, currentPage, onPageChange }: LayoutPr
           { id: 'reports', label: 'Reports', icon: FileText },
           { id: 'analytics', label: 'Analytics', icon: BarChart3 },
         ];
-      case 'manager':
-        return [
-          ...baseItems,
-          { id: 'routes', label: 'Routes', icon: Route },
-          { id: 'vehicles', label: 'Vehicles', icon: Truck },
-          { id: 'reports', label: 'Reports', icon: FileText },
-          { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-        ];
+
       case 'staff':
         return [
           ...baseItems,
@@ -66,16 +59,25 @@ export default function Layout({ children, currentPage, onPageChange }: LayoutPr
   const navigationItems = getNavigationItems();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
+      {/* Mobile Top Bar & Hamburger */}
+      <header className="md:hidden bg-white shadow-sm border-b border-gray-200 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3">
+        <div className="flex items-center">
+          <Truck className="h-6 w-6 sm:h-7 sm:w-7 text-emerald-600" />
+          <span className="ml-2 text-base sm:text-lg font-bold text-gray-900">WasteMS - Vadodara</span>
+        </div>
+        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-1.5 sm:p-2 text-gray-600 focus:outline-none">
+          <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+      </header>
+
       {/* Sidebar */}
-      <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-lg">
+      <aside className={`fixed md:static inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-200 ease-in-out`}>
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="px-6 py-6 border-b border-gray-200">
-            <div className="flex items-center">
-              <Truck className="h-8 w-8 text-emerald-600" />
-              <span className="ml-3 text-xl font-bold text-gray-900">WasteMS</span>
-            </div>
+          <div className="px-6 py-6 border-b border-gray-200 hidden md:flex items-center">
+            <Truck className="h-8 w-8 text-emerald-600" />
+            <span className="ml-3 text-xl font-bold text-gray-900">WasteMS - Vadodara</span>
           </div>
 
           {/* User Info */}
@@ -100,7 +102,7 @@ export default function Layout({ children, currentPage, onPageChange }: LayoutPr
               return (
                 <button
                   key={item.id}
-                  onClick={() => onPageChange(item.id)}
+                  onClick={() => { onPageChange(item.id); setSidebarOpen(false); }}
                   className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                     currentPage === item.id
                       ? 'bg-emerald-100 text-emerald-700'
@@ -129,30 +131,17 @@ export default function Layout({ children, currentPage, onPageChange }: LayoutPr
             </button>
           </div>
         </div>
-      </div>
+      </aside>
+
+      {/* Overlay for mobile sidebar */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 z-30 md:hidden" onClick={() => setSidebarOpen(false)}></div>
+      )}
 
       {/* Main Content */}
-      <div className="ml-64">
-        {/* Top Bar */}
-        <header className="bg-white shadow-sm border-b border-gray-200">
-          <div className="flex items-center justify-between px-6 py-4">
-            <h1 className="text-2xl font-bold text-gray-900 capitalize">
-              {currentPage === 'my-reports' ? 'My Reports' : currentPage}
-            </h1>
-            <div className="flex items-center space-x-4">
-              <button className="relative p-2 text-gray-400 hover:text-gray-500 transition-colors">
-                <Bell className="h-6 w-6" />
-                <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-              </button>
-            </div>
-          </div>
-        </header>
-
-        {/* Page Content */}
-        <main className="p-6">
-          {children}
-        </main>
-      </div>
+      <main className="flex-1 p-4 sm:p-6 md:p-8">
+        {children}
+      </main>
     </div>
   );
 }

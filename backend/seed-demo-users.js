@@ -25,23 +25,16 @@ const demoUsers = [
     password: 'admin123',
     role: 'admin',
     phone: '+1-555-0101',
-    assignedArea: 'City Center'
+    assignedArea: 'Alkapuri, Vadodara'
   },
-  {
-    name: 'Operations Manager',
-    email: 'manager@wms.com',
-    password: 'manager123',
-    role: 'manager',
-    phone: '+1-555-0102',
-    assignedArea: 'Downtown'
-  },
+
   {
     name: 'Collection Staff',
     email: 'staff@wms.com',
     password: 'staff123',
     role: 'staff',
     phone: '+1-555-0103',
-    assignedArea: 'Industrial Area'
+    assignedArea: 'Manjalpur, Vadodara'
   },
   {
     name: 'John Citizen',
@@ -49,7 +42,7 @@ const demoUsers = [
     password: 'citizen123',
     role: 'citizen',
     phone: '+1-555-0104',
-    assignedArea: 'Residential Area'
+    assignedArea: 'Gotri, Vadodara'
   }
 ];
 

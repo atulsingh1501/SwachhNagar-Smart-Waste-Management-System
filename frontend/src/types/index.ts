@@ -2,7 +2,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'admin' | 'staff' | 'citizen' | 'manager';
+  role: 'admin' | 'staff' | 'citizen';
   phone?: string;
   assignedArea?: string;
 }
@@ -49,6 +49,24 @@ export interface CitizenReport {
   reportedAt: string;
   assignedTo?: string;
   resolvedAt?: string;
+}
+
+export interface PickupRequest {
+  id: string;
+  citizenId: string;
+  location: string;
+  description: string;
+  wasteType: 'solid' | 'recyclable' | 'compost' | 'hazardous';
+  preferredTime: string;
+  status: 'pending' | 'scheduled' | 'in-progress' | 'completed' | 'cancelled';
+  coordinates: { lat: number; lng: number };
+  estimatedWeight?: number;
+  specialInstructions?: string;
+  assignedStaff?: string;
+  scheduledDate?: string;
+  completedAt?: string;
+  notes?: string;
+  createdAt: string;
 }
 
 export interface Route {

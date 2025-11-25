@@ -3,59 +3,59 @@ import { WasteCollection, Vehicle, BinStatus, CitizenReport, Route, Notification
 export const mockCollections: WasteCollection[] = [
   {
     id: 'col-1',
-    area: 'Downtown',
+    area: 'Alkapuri',
     route: 'Route A',
     scheduledTime: '2025-01-09T08:00:00',
     status: 'pending',
     assignedStaff: 'John Driver',
     vehicleId: 'truck-1',
     wasteType: 'solid',
-    coordinates: { lat: 40.7128, lng: -74.0060 }
+    coordinates: { lat: 22.3107, lng: 73.1713 }
   },
   {
     id: 'col-2',
-    area: 'Suburbs',
+    area: 'Gotri',
     route: 'Route B',
     scheduledTime: '2025-01-09T09:30:00',
     status: 'in-progress',
     assignedStaff: 'Mike Collector',
     vehicleId: 'truck-2',
     wasteType: 'recyclable',
-    coordinates: { lat: 40.7589, lng: -73.9851 }
+    coordinates: { lat: 22.3185, lng: 73.1599 }
   },
   {
     id: 'col-3',
-    area: 'Industrial',
+    area: 'Manjalpur',
     route: 'Route C',
     scheduledTime: '2025-01-09T10:00:00',
     status: 'completed',
     assignedStaff: 'Sarah Worker',
     vehicleId: 'truck-3',
     wasteType: 'compost',
-    coordinates: { lat: 40.7488, lng: -73.9857 }
+    coordinates: { lat: 22.2715, lng: 73.1968 }
   }
 ];
 
 export const mockVehicles: Vehicle[] = [
   {
     id: 'truck-1',
-    plateNumber: 'WM-001',
+    plateNumber: 'GJ-06-VM-001',
     capacity: 10000,
     status: 'active',
-    currentLocation: { lat: 40.7128, lng: -74.0060 },
+    currentLocation: { lat: 22.3107, lng: 73.1713 },
     assignedRoute: 'Route A'
   },
   {
     id: 'truck-2',
-    plateNumber: 'WM-002',
+    plateNumber: 'GJ-06-VM-002',
     capacity: 12000,
     status: 'active',
-    currentLocation: { lat: 40.7589, lng: -73.9851 },
+    currentLocation: { lat: 22.3185, lng: 73.1599 },
     assignedRoute: 'Route B'
   },
   {
     id: 'truck-3',
-    plateNumber: 'WM-003',
+    plateNumber: 'GJ-06-VM-003',
     capacity: 8000,
     status: 'maintenance',
     assignedRoute: 'Route C'
@@ -65,24 +65,24 @@ export const mockVehicles: Vehicle[] = [
 export const mockBins: BinStatus[] = [
   {
     id: 'bin-1',
-    location: '123 Main St',
-    coordinates: { lat: 40.7128, lng: -74.0060 },
+    location: 'Race Course Road, Alkapuri',
+    coordinates: { lat: 22.3107, lng: 73.1713 },
     status: 'full',
     lastCollected: '2025-01-07T10:30:00',
     wasteType: 'solid'
   },
   {
     id: 'bin-2',
-    location: '456 Oak Ave',
-    coordinates: { lat: 40.7589, lng: -73.9851 },
+    location: 'Gotri Road, Gotri',
+    coordinates: { lat: 22.3185, lng: 73.1599 },
     status: 'half-full',
     lastCollected: '2025-01-08T14:20:00',
     wasteType: 'recyclable'
   },
   {
     id: 'bin-3',
-    location: '789 Pine Rd',
-    coordinates: { lat: 40.7488, lng: -73.9857 },
+    location: 'Manjalpur Road, Manjalpur',
+    coordinates: { lat: 22.2715, lng: 73.1968 },
     status: 'overflowing',
     lastCollected: '2025-01-06T09:15:00',
     wasteType: 'compost'
@@ -93,8 +93,8 @@ export const mockReports: CitizenReport[] = [
   {
     id: 'rep-1',
     citizenId: '3',
-    location: '321 Elm St',
-    coordinates: { lat: 40.7280, lng: -74.0020 },
+    location: 'Sayajigunj, Vadodara',
+    coordinates: { lat: 22.3045, lng: 73.1812 },
     description: 'Bin not collected for 3 days, overflowing onto sidewalk',
     status: 'received',
     priority: 'high',
@@ -103,8 +103,8 @@ export const mockReports: CitizenReport[] = [
   {
     id: 'rep-2',
     citizenId: '3',
-    location: '654 Maple Dr',
-    coordinates: { lat: 40.7350, lng: -73.9950 },
+    location: 'Waghodia Road, Vadodara',
+    coordinates: { lat: 22.2973, lng: 73.1968 },
     description: 'Recyclable bin mixed with regular waste',
     status: 'in-progress',
     priority: 'medium',
@@ -116,8 +116,8 @@ export const mockReports: CitizenReport[] = [
 export const mockRoutes: Route[] = [
   {
     id: 'route-a',
-    name: 'Route A - Downtown',
-    areas: ['Downtown', 'Financial District'],
+    name: 'Route A - Alkapuri',
+    areas: ['Alkapuri', 'Race Course', 'Sayajigunj'],
     estimatedDuration: 240,
     status: 'active',
     binCount: 45,
@@ -125,8 +125,8 @@ export const mockRoutes: Route[] = [
   },
   {
     id: 'route-b',
-    name: 'Route B - Suburbs',
-    areas: ['Suburbs', 'Residential North'],
+    name: 'Route B - Gotri',
+    areas: ['Gotri', 'Vasna', 'Harni'],
     estimatedDuration: 180,
     status: 'active',
     binCount: 38,
@@ -134,8 +134,8 @@ export const mockRoutes: Route[] = [
   },
   {
     id: 'route-c',
-    name: 'Route C - Industrial',
-    areas: ['Industrial Park', 'Commercial Zone'],
+    name: 'Route C - Manjalpur',
+    areas: ['Manjalpur', 'Tandalja', 'Vishwamitri'],
     estimatedDuration: 200,
     status: 'inactive',
     binCount: 28,

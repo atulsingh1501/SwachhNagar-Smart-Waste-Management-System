@@ -35,51 +35,51 @@ export default function StaffDashboard() {
   return (
     <div className="space-y-6">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Assigned Tasks</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.assignedTasks}</p>
+              <p className="text-xs sm:text-sm font-medium text-gray-600">Assigned Tasks</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.assignedTasks}</p>
             </div>
-            <div className="bg-blue-100 p-3 rounded-full">
-              <FileText className="h-6 w-6 text-blue-600" />
+            <div className="bg-blue-100 p-2 sm:p-3 rounded-full">
+              <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Completed</p>
-              <p className="text-3xl font-bold text-green-600">{stats.completedTasks}</p>
+              <p className="text-xs sm:text-sm font-medium text-gray-600">Completed</p>
+              <p className="text-2xl sm:text-3xl font-bold text-green-600">{stats.completedTasks}</p>
             </div>
-            <div className="bg-green-100 p-3 rounded-full">
-              <CheckCircle className="h-6 w-6 text-green-600" />
+            <div className="bg-green-100 p-2 sm:p-3 rounded-full">
+              <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">In Progress</p>
-              <p className="text-3xl font-bold text-blue-600">{stats.inProgressTasks}</p>
+              <p className="text-xs sm:text-sm font-medium text-gray-600">In Progress</p>
+              <p className="text-2xl sm:text-3xl font-bold text-blue-600">{stats.inProgressTasks}</p>
             </div>
-            <div className="bg-blue-100 p-3 rounded-full">
-              <Clock className="h-6 w-6 text-blue-600" />
+            <div className="bg-blue-100 p-2 sm:p-3 rounded-full">
+              <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Pending</p>
-              <p className="text-3xl font-bold text-orange-600">{stats.pendingTasks}</p>
+              <p className="text-xs sm:text-sm font-medium text-gray-600">Pending</p>
+              <p className="text-2xl sm:text-3xl font-bold text-orange-600">{stats.pendingTasks}</p>
             </div>
-            <div className="bg-orange-100 p-3 rounded-full">
-              <AlertTriangle className="h-6 w-6 text-orange-600" />
+            <div className="bg-orange-100 p-2 sm:p-3 rounded-full">
+              <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-orange-600" />
             </div>
           </div>
         </div>
@@ -133,21 +133,21 @@ export default function StaffDashboard() {
           <div className="px-6 py-4 border-b border-gray-200">
             <h3 className="text-lg font-medium text-gray-900">Quick Actions</h3>
           </div>
-          <div className="p-6 space-y-4">
-            <button className="w-full flex items-center justify-center px-4 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
-              <Navigation className="h-5 w-5 mr-2" />
+          <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+            <button className="w-full flex items-center justify-center px-3 sm:px-4 py-2 sm:py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors text-sm sm:text-base">
+              <Navigation className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               Navigate to Next Stop
             </button>
-            <button className="w-full flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-              <CheckCircle className="h-5 w-5 mr-2" />
+            <button className="w-full flex items-center justify-center px-3 sm:px-4 py-2 sm:py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm sm:text-base">
+              <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               Mark as Complete
             </button>
-            <button className="w-full flex items-center justify-center px-4 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
-              <AlertTriangle className="h-5 w-5 mr-2" />
+            <button className="w-full flex items-center justify-center px-3 sm:px-4 py-2 sm:py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors text-sm sm:text-base">
+              <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               Report Issue
             </button>
-            <button className="w-full flex items-center justify-center px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-              <Truck className="h-5 w-5 mr-2" />
+            <button className="w-full flex items-center justify-center px-3 sm:px-4 py-2 sm:py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm sm:text-base">
+              <Truck className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               Vehicle Status
             </button>
           </div>

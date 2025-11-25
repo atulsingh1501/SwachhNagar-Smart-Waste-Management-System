@@ -57,7 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
 
-      const { loginUser } = await import('../lib/api_backend');
+      const { loginUser } = await import('../lib/api_fixed');
       const response = await loginUser(email, password);
 
       if (response.token && response.user) {
@@ -83,7 +83,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
 
-      const { registerUser } = await import('../lib/api_backend');
+      const { registerUser } = await import('../lib/api_fixed');
       const response = await registerUser({ name, email, password, role, phone, assignedArea });
 
       if (response.message === 'User registered successfully') {
