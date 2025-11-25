@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import {
   BarChart3,
   TrendingUp,
@@ -10,9 +9,9 @@ import {
   MapPin,
   Truck,
   Users,
-  AlertTriangle, // This was imported but not used in the error block
+  AlertTriangle,
   CheckCircle,
-  RefreshCw // Import for the refresh icon
+  RefreshCw
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext_fixed';
 import { fetchCollections, fetchReports, fetchVehicles, fetchRoutes } from '../../lib/api_fixed';
@@ -32,9 +31,7 @@ export default function Analytics() {
     console.log('Analytics: Starting data load...');
     try {
       setLoading(true);
-      setError(null); // Clear previous errors before a new attempt
-      console.log('Analytics: Setting loading to true.');
-      // Prefer token from auth context, fall back to common localStorage keys
+      setError(null);
       const token = contextToken || localStorage.getItem('auth_token') || localStorage.getItem('token');
       if (!token) {
         setError('User token not found. Please login again.');
@@ -61,7 +58,6 @@ export default function Analytics() {
         })
       ]);
 
-      console.log('Analytics: Fetched data successfully.');
       setCollections(collectionsData);
       setReports(reportsData);
       setVehicles(vehiclesData);
@@ -72,7 +68,6 @@ export default function Analytics() {
       setError(`Failed to load data. Reason: ${errMsg}.`);
     } finally {
       setLoading(false);
-      console.log('Analytics: Data load finished.');
     }
   };
 
@@ -80,34 +75,32 @@ export default function Analytics() {
     loadData();
   }, []);
 
-    // Render loading or error states first inside try to catch render errors too
-    if (loading) {
-      return (
-        <div className="flex items-center justify-center h-64">
-          <div className="h-8 w-8 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      );
-    }
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="h-8 w-8 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
-    if (error) {
-      return (
-        <div className="flex flex-col items-center justify-center h-64 bg-red-50 border border-red-200 rounded-lg p-4">
-          <AlertTriangle className="h-12 w-12 text-red-500 mb-4" />
-          <h3 className="text-lg font-semibold text-red-800 mb-2">Error Loading Analytics</h3>
-          <p className="text-red-700 text-center mb-6">{error}</p>
-          <button
-            onClick={loadData}
-            className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-          >
-            <RefreshCw className="h-5 w-5 mr-2" />
-            Try Again
-          </button>
-        </div>
-      );
-    }
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 bg-red-50 border border-red-200 rounded-lg p-4">
+        <AlertTriangle className="h-12 w-12 text-red-500 mb-4" />
+        <h3 className="text-lg font-semibold text-red-800 mb-2">Error Loading Analytics</h3>
+        <p className="text-red-700 text-center mb-6">{error}</p>
+        <button
+          onClick={loadData}
+          className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+        >
+          <RefreshCw className="h-5 w-5 mr-2" />
+          Try Again
+        </button>
+      </div>
+    );
+  }
 
-    try {
-    // Calculate analytics data
+  try {
     const analytics = {
       totalCollections: collections?.length || 0,
       completedCollections: collections?.filter((c: any) => c.status === 'completed').length || 0,
@@ -126,7 +119,6 @@ export default function Analytics() {
       ? Math.round((analytics.resolvedReports / analytics.totalReports) * 100)
       : 0;
 
-    // Mock chart data
     const chartData = {
       collections: [
         { day: 'Mon', completed: 45, pending: 12 },
@@ -150,7 +142,6 @@ export default function Analytics() {
 
     return (
       <div className="space-y-6">
-        {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Analytics & Reports</h2>
@@ -174,7 +165,6 @@ export default function Analytics() {
           </div>
         </div>
 
-        {/* Key Metrics */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
             <div className="flex items-center justify-between">
@@ -241,9 +231,7 @@ export default function Analytics() {
           </div>
         </div>
 
-        {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-          {/* Collections Chart */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200">
             <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
               <h3 className="text-base sm:text-lg font-medium text-gray-900">Daily Collections</h3>
@@ -279,7 +267,6 @@ export default function Analytics() {
             </div>
           </div>
 
-          {/* Reports Chart */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200">
             <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
               <h3 className="text-base sm:text-lg font-medium text-gray-900">Citizen Reports</h3>
@@ -289,14 +276,8 @@ export default function Analytics() {
                 {chartData.reports.map((data, index) => (
                   <div key={index} className="flex flex-col items-center space-y-2 flex-1">
                     <div className="w-full flex flex-col items-center space-y-1">
-                      <div 
-                        className="w-full bg-blue-500 rounded-t"
-                        style={{ height: `${(data.resolved / 20) * 200}px` }}
-                      ></div>
-                      <div 
-                        className="w-full bg-red-300 rounded-b"
-                        style={{ height: `${(data.received / 20) * 200}px` }}
-                      ></div>
+                      <div className="w-full bg-blue-500 rounded-t" style={{ height: `${(data.resolved / 20) * 200}px` }}></div>
+                      <div className="w-full bg-red-300 rounded-b" style={{ height: `${(data.received / 20) * 200}px` }}></div>
                     </div>
                     <span className="text-xs text-gray-600">{data.day}</span>
                   </div>
@@ -316,7 +297,6 @@ export default function Analytics() {
           </div>
         </div>
 
-        {/* Performance Summary */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
             <h3 className="text-base sm:text-lg font-medium text-gray-900">Performance Summary</h3>
@@ -324,48 +304,32 @@ export default function Analytics() {
           <div className="p-4 sm:p-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-emerald-600 mb-2">
-                  {analytics.activeRoutes}
-                </div>
+                <div className="text-3xl font-bold text-emerald-600 mb-2">{analytics.activeRoutes}</div>
                 <div className="text-sm text-gray-600 mb-4">Active Routes</div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div 
-                    className="bg-emerald-600 h-2 rounded-full" 
-                    style={{ width: `${(analytics.activeRoutes / (routes?.length || 1)) * 100}%` }}
-                  ></div>
+                  <div className="bg-emerald-600 h-2 rounded-full" style={{ width: `${(analytics.activeRoutes / (routes?.length || 1)) * 100}%` }}></div>
                 </div>
               </div>
               
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">
-                  {analytics.activeVehicles}
-                </div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">{analytics.activeVehicles}</div>
                 <div className="text-sm text-gray-600 mb-4">Active Vehicles</div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div 
-                    className="bg-blue-600 h-2 rounded-full" 
-                    style={{ width: `${(analytics.activeVehicles / (vehicles?.length || 1)) * 100}%` }}
-                  ></div>
+                  <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${(analytics.activeVehicles / (vehicles?.length || 1)) * 100}%` }}></div>
                 </div>
               </div>
               
               <div className="text-center">
-                <div className="text-3xl font-bold text-purple-600 mb-2">
-                  {Math.round(((analytics.completedCollections + analytics.resolvedReports) / (analytics.totalCollections + analytics.totalReports || 1)) * 100)}%
-                </div>
+                <div className="text-3xl font-bold text-purple-600 mb-2">{Math.round(((analytics.completedCollections + analytics.resolvedReports) / (analytics.totalCollections + analytics.totalReports || 1)) * 100)}%</div>
                 <div className="text-sm text-gray-600 mb-4">Overall Efficiency</div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div 
-                    className="bg-purple-600 h-2 rounded-full" 
-                    style={{ width: `${((analytics.completedCollections + analytics.resolvedReports) / (analytics.totalCollections + analytics.totalReports || 1)) * 100}%` }}
-                  ></div>
+                  <div className="bg-purple-600 h-2 rounded-full" style={{ width: `${((analytics.completedCollections + analytics.resolvedReports) / (analytics.totalCollections + analytics.totalReports || 1)) * 100}%` }}></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Recent Activity */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
             <h3 className="text-base sm:text-lg font-medium text-gray-900">System Insights</h3>
@@ -430,12 +394,12 @@ export default function Analytics() {
         </div>
       </div>
     );
-    } catch (renderError) {
-      console.error('Analytics render error:', renderError);
+  } catch (renderError) {
+    console.error('Analytics render error:', renderError);
     return (
       <div className="bg-red-50 border border-red-200 rounded-lg p-4">
         <p className="text-red-800">An error occurred while rendering the analytics page. Please try again later.</p>
       </div>
     );
-}
+  }
 }
