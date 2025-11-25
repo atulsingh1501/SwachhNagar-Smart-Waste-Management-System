@@ -144,5 +144,3 @@ Screenshots have been uploaded to the project owner's LinkedIn account. To keep 
 
 This repository does not include a specific license file. 
 ---
-
-# waste_management_system
