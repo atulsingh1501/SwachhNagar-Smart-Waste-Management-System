@@ -14,7 +14,7 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { useSupabaseQuery, useSupabaseMutation } from '../../hooks/useSupabase';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext_backend';
 
 export default function TaskManagement() {
   const { user } = useAuth();

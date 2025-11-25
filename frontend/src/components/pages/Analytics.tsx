@@ -13,7 +13,7 @@ import {
   CheckCircle,
   RefreshCw
 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext_fixed';
+import { useAuth } from '../../context/AuthContext_backend';
 import { fetchCollections, fetchReports, fetchVehicles, fetchRoutes } from '../../lib/api_fixed';
 
 export default function Analytics() {
