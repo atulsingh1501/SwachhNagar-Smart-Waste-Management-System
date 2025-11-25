@@ -133,7 +133,6 @@ Common issues and solutions:
 
 Screenshots have been uploaded to the project owner's LinkedIn account. To keep the repository lightweight, images are not embedded here.
 
-Please paste your LinkedIn post or album URL in the project README when ready and I will add a direct link to it in this section. If you prefer images embedded in the repository instead, upload them to `frontend/screenshots/` and I will add them to the README.
 
 ## Contributing
 
@@ -143,13 +142,7 @@ Please paste your LinkedIn post or album URL in the project README when ready an
 
 ## License
 
-This repository does not include a specific license file. Add a `LICENSE` file if you plan to distribute the code publicly.
-
+This repository does not include a specific license file. 
 ---
 
-If you want I can also:
-
-- Open a PR with the README changes, or
-- Add the screenshot file if you provide the image, or
-- Create a short contributing checklist / PR template.
 # waste_management_system
