@@ -130,18 +130,44 @@ Common issues and solutions:
   - Sometimes Vite HMR shows errors due to broken imports or duplicate React contexts. Restarting the dev server can help: stop and `npm run dev` again.
 
 ## Screenshots
+Include screenshots in `frontend/screenshots/` and reference them in the README. Below are the images I will reference — place the exact files in `frontend/screenshots/` so they render in this README.
 
-Include screenshots in `frontend/screenshots/` and reference them in README. Common useful screenshots:
+Files to add (recommended names):
 
-- `frontend/screenshots/analytics-error.png` — analytics error / console output (useful when debugging the `useAuth` issue)
+- `frontend/screenshots/dashboard.png`
+- `frontend/screenshots/users.png`
+- `frontend/screenshots/routes.png`
+- `frontend/screenshots/vehicles.png`
+- `frontend/screenshots/reports.png`
+- `frontend/screenshots/analytics-overview.png`
+- `frontend/screenshots/analytics-scroll1.png`
+- `frontend/screenshots/analytics-scroll2.png`
+- `frontend/screenshots/analytics-insights.png`
+- `frontend/screenshots/login.png`
 
-Example Markdown to include a screenshot in this README:
+When those images are present in the repo, they will appear here:
 
-```md
-![Analytics Error](frontend/screenshots/analytics-error.png)
-```
+![Dashboard](frontend/screenshots/dashboard.png)
 
-Place your screenshot file at `frontend/screenshots/analytics-error.png` and it will display above.
+![Users](frontend/screenshots/users.png)
+
+![Routes](frontend/screenshots/routes.png)
+
+![Vehicles](frontend/screenshots/vehicles.png)
+
+![Reports](frontend/screenshots/reports.png)
+
+![Analytics Overview](frontend/screenshots/analytics-overview.png)
+
+![Analytics Scroll 1](frontend/screenshots/analytics-scroll1.png)
+
+![Analytics Scroll 2](frontend/screenshots/analytics-scroll2.png)
+
+![Analytics Insights](frontend/screenshots/analytics-insights.png)
+
+![Login](frontend/screenshots/login.png)
+
+If you upload the images here or place them in `frontend/screenshots/` in the workspace, I will add and commit them for you.
 
 ## Contributing
 
