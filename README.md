@@ -132,6 +132,7 @@ Common issues and solutions:
 ## Screenshots
 
 Screenshots have been uploaded to the project owner's LinkedIn account. To keep the repository lightweight, images are not embedded here.
+https://www.linkedin.com/posts/atul-singh-20y_civictech-wastemanagement-smartcities-activity-7399136046002913280-Mz3h?utm_source=share&utm_medium=member_desktop&rcm=ACoAAExnTMgBhtv5UL-s1tu-G5IsJn1GjoFYg5c
 
 
 ## Contributing
