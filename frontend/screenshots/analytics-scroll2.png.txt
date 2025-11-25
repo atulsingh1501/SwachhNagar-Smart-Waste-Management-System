@@ -1,0 +1,7 @@
+Placeholder for `analytics-scroll2.png`.
+Replace this file with the real image at `frontend/screenshots/analytics-scroll2.png`.
+
+To replace:
+1. Save the real image named `analytics-scroll2.png`.
+2. Put it in `frontend/screenshots/`.
+3. Remove this `.txt` placeholder.
